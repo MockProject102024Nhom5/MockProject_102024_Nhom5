@@ -5,6 +5,7 @@ import CreateEmployee from '../pages/employee/create.tsx';
 import User from '../pages/user/index.tsx';
 import CreateAccount from '../pages/user/create.tsx';
 import EditAccount from '../pages/user/edit.tsx';
+import ResidentList from '../pages/resident/index.tsx';
 
 
 
@@ -33,6 +34,11 @@ const UserRoutes: UserElement[] = [
     {
         path: '/user/edit/:id',
         element: <EditAccount />,
+    },
+    //resident
+    {
+        path: '/resident',
+        element: <ResidentList />,
     },
 ]
 export default UserRoutes;
