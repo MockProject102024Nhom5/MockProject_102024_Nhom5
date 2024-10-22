@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 //Router
 import UserRoutes from "./routes/index.tsx";
 // layout
-import UserLayout from "./layout/Sidebar.tsx";
+import Sidebar from "./layout/Sidebar.tsx";
 
 interface RouterProducerProps {
 	routeConfig: UserElement[];
@@ -22,7 +22,7 @@ const RouterProducer: React.FC<RouterProducerProps> = ({ routeConfig }) => {
 		));
 	return (
 		<Routes>
-			<Route path="/" element={<UserLayout />}>
+			<Route path="/" element={<Sidebar />}>
 				{renderRoutes(routeConfig)}
 			</Route>
 		</Routes>

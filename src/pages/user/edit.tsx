@@ -52,11 +52,11 @@ const Edit: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-2xl font-bold mb-4">Edit Account</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Full Name</label>
+          <label className="block texst-sm font-medium text-gray-700">Full Name</label>
           <input
             type="text"
             value={fullName}

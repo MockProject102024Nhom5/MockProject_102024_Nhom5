@@ -15,9 +15,12 @@ interface Account {
 const AccountList: React.FC = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false); // Modal state
-  const [accountToDelete, setAccountToDelete] = useState<Account | null>(null); // Account to delete
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [accountToDelete, setAccountToDelete] = useState<Account | null>(null);
 
+  // State for pagination
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [accountsPerPage] = useState<number>(8); // Number of accounts per page
 
   useEffect(() => {
     fetchAccounts();
@@ -34,6 +37,7 @@ const AccountList: React.FC = () => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
   };
 
   const handleDelete = (account: Account) => {
@@ -53,13 +57,35 @@ const AccountList: React.FC = () => {
     }
   };
 
+  // Filter accounts based on search term
   const filteredAccounts = accounts.filter(account =>
     account.full_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredAccounts.length / accountsPerPage);
+
+  // Get current accounts based on currentPage and accountsPerPage
+  const indexOfLastAccount = currentPage * accountsPerPage;
+  const indexOfFirstAccount = indexOfLastAccount - accountsPerPage;
+  const currentAccounts = filteredAccounts.slice(indexOfFirstAccount, indexOfLastAccount);
+
+  // Handle pagination navigation
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Account list</h2>
+      <h2 className="text-2xl font-bold mb-4">Account List</h2>
       <div className="flex mb-4">
         <input
           type="text"
@@ -85,7 +111,7 @@ const AccountList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredAccounts.map((account) => (
+          {currentAccounts.map((account) => (
             <tr key={account.id} className="text-center">
               <td className="border border-gray-300 px-4 py-2">{account.full_name}</td>
               <td className="border border-gray-300 px-4 py-2">{account.phone_number}</td>
@@ -142,9 +168,21 @@ const AccountList: React.FC = () => {
 
       {/* Pagination */}
       <div className="flex justify-between mt-4">
-        <button className="bg-gray-300 text-gray-700 rounded-md px-4 py-2">Previous</button>
-        <span>1</span>
-        <button className="bg-gray-300 text-gray-700 rounded-md px-4 py-2">Next</button>
+        <button
+          onClick={handlePreviousPage}
+          className={`bg-gray-300 text-gray-700 rounded-md px-4 py-2 ${currentPage === 1 ? 'cursor-not-allowed' : ''}`}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>{currentPage} / {totalPages}</span>
+        <button
+          onClick={handleNextPage}
+          className={`bg-gray-300 text-gray-700 rounded-md px-4 py-2 ${currentPage === totalPages ? 'cursor-not-allowed' : ''}`}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
