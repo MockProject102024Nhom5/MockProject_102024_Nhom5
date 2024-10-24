@@ -97,7 +97,7 @@ const AccountList: React.FC = () => {
         <button onClick={fetchAccounts} className="bg-green-500 text-white rounded-md px-4 py-2">
           Search
         </button>
-        <button className="ml-2 bg-blue-500 text-white rounded-md px-4 py-2"><Link to={'/user/create'}>Add Account</Link></button>
+        <button className="ml-2 bg-blue-500 text-white rounded-md px-4 py-2"><Link to={'/accounts/create'}>Add Account</Link></button>
       </div>
       <table className="min-w-full table-auto border-collapse border border-gray-300">
         <thead>
@@ -128,7 +128,7 @@ const AccountList: React.FC = () => {
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 <button className="bg-yellow-500 text-white rounded-md px-2 py-1 mr-2">
-                  <Link to={`/user/edit/${account.id}`}>Edit</Link>
+                  <Link to={`/accounts/edit/${account.id}`}>Edit</Link>
                 </button>
                 <button
                   onClick={() => handleDelete(account)}

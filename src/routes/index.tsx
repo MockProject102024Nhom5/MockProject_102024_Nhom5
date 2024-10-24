@@ -31,15 +31,15 @@ const UserRoutes: UserElement[] = [
     },
     //User
     {
-        path: '/user',
+        path: '/accounts',
         element: <User />,
     },
     {
-        path: '/user/create',
+        path: '/accounts/create',
         element: <CreateAccount />,
     },
     {
-        path: '/user/edit/:id',
+        path: '/accounts/edit/:id',
         element: <EditAccount />,
     },
 ]
