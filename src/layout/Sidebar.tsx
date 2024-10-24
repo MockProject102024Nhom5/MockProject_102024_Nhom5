@@ -45,7 +45,7 @@ const Sidebar: React.FC = () => {
 						{/* <span className="ml-auto bg-gray-600 text-white text-xs px-2 py-1 rounded-full">20+</span> */}
 					</li>
 					<li className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md">
-						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}>Resident</span>
+						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}><Link to={"/resident"}>Resident</Link></span>
 					</li>
 					<li className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md">
 						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}>Documents</span>
