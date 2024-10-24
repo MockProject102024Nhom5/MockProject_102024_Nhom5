@@ -1,4 +1,7 @@
-# Adding a new contract
+
+from requests import session
+from BuildingManager import Contract, Provider
+
 def add_contract(company_name, contact_name, start_date, end_date, status, special_terms, provider_id):
     new_contract = Contract(
         company_name=company_name,

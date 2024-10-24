@@ -4,7 +4,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-# Service Provider class
 class Provider(Base):
     __tablename__ = 'providers'
     
@@ -16,7 +15,6 @@ class Provider(Base):
     
     contracts = relationship('Contract', back_populates='provider')
 
-# Service Contract class
 class Contract(Base):
     __tablename__ = 'contracts'
     
@@ -31,7 +29,7 @@ class Contract(Base):
     
     provider = relationship('Provider', back_populates='contracts')
 
-# Set up the database connection
+
 engine = create_engine('sqlite:///service_contracts.db')
 Base.metadata.create_all(engine)
 
