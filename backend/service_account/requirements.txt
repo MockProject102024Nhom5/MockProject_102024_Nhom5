@@ -1,0 +1,6 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+djangorestframework-simplejwt[cryptography]
+django-cors-headers
+pyodbc
