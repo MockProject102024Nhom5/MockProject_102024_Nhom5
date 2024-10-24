@@ -1,4 +1,4 @@
-import userService from '../service/userService';
+import equipmentService from '../service/equipmentService';
 
 const testConnection = (req, res) => {
     return res.send("Connection is successful!");
@@ -6,7 +6,7 @@ const testConnection = (req, res) => {
 
 const getListApartmentAndAmenities = async (req, res) => {
     try {
-        let response = await userService.getListApartmentAndAmenities();
+        let response = await equipmentService.getListApartmentAndAmenities();
 
         if (!response) {
             return res.status(404).json({
@@ -32,7 +32,7 @@ const getApartmentAndAmenitiesById = async (req, res) => {
             });
         }
 
-        let response = await userService.getApartmentAndAmenitiesById(assetId);
+        let response = await equipmentService.getApartmentAndAmenitiesById(assetId);
         if (!response) {
             return res.status(404).json({
                 error: 'Not Found',
@@ -66,7 +66,7 @@ const createNewApartmentAmenity = async (req, res) => {
     try {
         let data = req.body;
 
-        let response = await userService.createNewApartmentAmenity(data);
+        let response = await equipmentService.createNewApartmentAmenity(data);
 
         if (response.error) {
             return res.status(400).json({
@@ -98,7 +98,7 @@ const updateApartmentAmenityById = async (req, res) => {
         let assetId = req.params.assetId;
         let data = req.body;
 
-        let response = await userService.updateApartmentAmenityById(assetId, data);
+        let response = await equipmentService.updateApartmentAmenityById(assetId, data);
 
         if (!response) {
             return res.status(404).json({ error: "Not Found", message: "Equipment or amenity record not found." });
@@ -115,7 +115,7 @@ const updateApartmentAmenityById = async (req, res) => {
 const deleteApartmentAmenityById = async (req, res) => {
     let assetId = req.params.assetId;
     try {
-        const response = await userService.deleteApartmentAmenity(assetId);
+        const response = await equipmentService.deleteApartmentAmenity(assetId);
 
         if (response.status === 404) {
             return res.status(404).json({ message: response.message });
@@ -137,7 +137,7 @@ const getEquipmentAndAmenitiesByBuilding = async (req, res) => {
             return res.status(400).json({ message: 'Missing buildingId parameter' });
         }
 
-        let response = await userService.getEquipmentAndAmenitiesByBuilding(buildingId);
+        let response = await equipmentService.getEquipmentAndAmenitiesByBuilding(buildingId);
 
         // Nếu không tìm thấy thiết bị hoặc tiện ích
         if (!response || response.length === 0) {

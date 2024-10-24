@@ -1,6 +1,5 @@
 import express from "express";
 import configViewEngine from "./config/viewEngine";
-import initWebRoutes from "./routes/web";
 import bodyParser from 'body-parser';
 import connection from './config/connectDB';
 import initApiRoutes from "./routes/api";
@@ -18,7 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //test connection db
 connection();
 
-initWebRoutes(app);
 initApiRoutes(app);
 
 app.listen(PORT, () => {
