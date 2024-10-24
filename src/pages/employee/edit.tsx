@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
 
 const EditEmployee: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Lấy ID từ URL
+  const { id } = useParams<{ id: string }>();
 
   const [employeeData, setEmployeeData] = useState({
     ssn: '',
@@ -16,13 +17,12 @@ const EditEmployee: React.FC = () => {
 
   const [message, setMessage] = useState('');
 
-  // Lấy dữ liệu của nhân viên khi component được mount
+  // Fetch employee data when the component mounts
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
-        const response = await fetch(`https://6710d190a85f4164ef2f7802.mockapi.io/employee/${id}`);
-        const data = await response.json();
-        setEmployeeData(data);
+        const response = await axios.get(`https://6710d190a85f4164ef2f7802.mockapi.io/employee/${id}`);
+        setEmployeeData(response.data);
       } catch (error) {
         console.error('Error fetching employee data:', error);
       }
@@ -31,6 +31,7 @@ const EditEmployee: React.FC = () => {
     fetchEmployeeData();
   }, [id]);
 
+  // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setEmployeeData({
@@ -39,23 +40,16 @@ const EditEmployee: React.FC = () => {
     });
   };
 
-  // Gửi yêu cầu chỉnh sửa nhân viên
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`https://6710d190a85f4164ef2f7802.mockapi.io/employee/${id}`, {
-        method: 'PUT', // Sử dụng PUT thay vì POST
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(employeeData),
-      });
+      const response = await axios.put(`https://6710d190a85f4164ef2f7802.mockapi.io/employee/${id}`, employeeData);
 
-      if (response.ok) {
-        const result = await response.json();
+      if (response.status === 200) {
         setMessage('Employee updated successfully!');
-        console.log('Employee updated:', result);
+        console.log('Employee updated:', response.data);
       } else {
         setMessage('Failed to update employee.');
         console.error('Error updating employee:', response.statusText);
@@ -71,7 +65,7 @@ const EditEmployee: React.FC = () => {
       <h2 className="text-xl font-bold mb-4">Edit Employee</h2>
 
       <form onSubmit={handleSubmit}>
-        {/* Các trường nhập liệu */}
+        {/* Input fields */}
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-2">
             <label className="block text-gray-700 font-medium mb-2" htmlFor="ssn">
@@ -163,6 +157,7 @@ const EditEmployee: React.FC = () => {
             />
           </div>
 
+          {/* Uncomment this block to include the "Note" field */}
           {/* <div className="col-span-2">
             <label className="block text-gray-700 font-medium mb-2" htmlFor="note">
               Note
@@ -177,7 +172,7 @@ const EditEmployee: React.FC = () => {
           </div> */}
         </div>
 
-        {/* Nút điều khiển */}
+        {/* Buttons */}
         <div className="mt-6 flex justify-center space-x-4">
           <button
             type="submit"
@@ -203,7 +198,7 @@ const EditEmployee: React.FC = () => {
         </div>
       </form>
 
-      {/* Thông báo */}
+      {/* Success or error message */}
       {message && <p className="text-center mt-4 text-green-500">{message}</p>}
     </div>
   );

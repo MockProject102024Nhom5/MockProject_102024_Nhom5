@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 interface Employee {
   id: string;
@@ -20,14 +21,16 @@ const Index: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1); // Current page
   const [employeesPerPage] = useState<number>(6); // Number of employees per page
 
-  // Call API to list Employees
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
+  const [employeeToDelete, setEmployeeToDelete] = useState<Employee | null>(null);
+
+  // Fetch employees when the component mounts
   useEffect(() => {
     const fetchEmployees = async () => {
       setLoading(true);
       try {
-        const response = await fetch('https://6710d190a85f4164ef2f7802.mockapi.io/employee');
-        const data = await response.json();
-        setEmployees(data);
+        const response = await axios.get('https://6710d190a85f4164ef2f7802.mockapi.io/employee');
+        setEmployees(response.data);
         setError(null);
       } catch (error) {
         setError('Failed to fetch employee data');
@@ -39,7 +42,7 @@ const Index: React.FC = () => {
     fetchEmployees();
   }, []);
 
-  // Filter employees by search input
+  // Search employees by name
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchName(value);
@@ -48,7 +51,7 @@ const Index: React.FC = () => {
     }
   };
 
-  // Filter employees based on search name
+  // Filter employees based on search input
   const filteredEmployees = employees.filter((employee) =>
     employee.full_name.toLowerCase().includes(searchName.toLowerCase())
   );
@@ -71,6 +74,26 @@ const Index: React.FC = () => {
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Handle delete confirmation
+  const handleDeleteClick = (employee: Employee) => {
+    setEmployeeToDelete(employee);
+    setShowDeleteConfirm(true);
+  };
+
+  // Confirm deletion
+  const handleConfirmDelete = async () => {
+    if (employeeToDelete) {
+      try {
+        await axios.delete(`https://6710d190a85f4164ef2f7802.mockapi.io/employee/${employeeToDelete.id}`);
+        setEmployees(employees.filter((emp) => emp.id !== employeeToDelete.id));
+        setShowDeleteConfirm(false);
+        setEmployeeToDelete(null);
+      } catch (error) {
+        console.error('Failed to delete employee', error);
+      }
     }
   };
 
@@ -119,9 +142,10 @@ const Index: React.FC = () => {
                     <td className="p-3 border">{employee.phone_number}</td>
                     <td className="p-3 border">{employee.email}</td>
                     <td className="p-3 border">{employee.job_position}</td>
-                    <td className="p-3 text-center border flex gap-2">
+                    <td className="p-3 text-center border flex gap-2 justify-center">
                       <button className="text-blue-500 hover:underline"><Link to={`/employee/edit/${employee.id}`}>Edit</Link></button>
                       <button className="text-green-500 hover:underline"><Link to={`/employee/${employee.id}`}>Detail</Link></button>
+                      <button className="text-red-500 hover:underline" onClick={() => handleDeleteClick(employee)}>Delete</button>
                     </td>
                   </tr>
                 ))}
@@ -149,6 +173,30 @@ const Index: React.FC = () => {
           </>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-md shadow-md">
+            <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+            <p>Are you sure you want to delete {employeeToDelete?.full_name}?</p>
+            <div className="flex justify-end mt-4 space-x-4">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                onClick={handleConfirmDelete}
+              >
+                Delete
+              </button>
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+                onClick={() => setShowDeleteConfirm(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

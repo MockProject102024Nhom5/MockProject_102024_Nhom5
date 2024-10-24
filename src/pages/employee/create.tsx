@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const AddEmployeeForm: React.FC = () => {
   const [employeeData, setEmployeeData] = useState({
@@ -22,23 +23,17 @@ const AddEmployeeForm: React.FC = () => {
     });
   };
 
-  // Submit create emplyee
+  // Submit new employee
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://6710d190a85f4164ef2f7802.mockapi.io/employee', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(employeeData),
-      });
+      const response = await axios.post('https://6710d190a85f4164ef2f7802.mockapi.io/employee', employeeData);
 
-      if (response.ok) {
-        const result = await response.json();
+      if (response.status === 201) {
         setMessage('Employee added successfully!');
-        console.log('Employee added:', result);
+        console.log('Employee added:', response.data);
+
         setEmployeeData({
           ssn: '',
           full_name: '',
@@ -53,20 +48,19 @@ const AddEmployeeForm: React.FC = () => {
         console.error('Error adding employee:', response.statusText);
       }
     } catch (error) {
-      setMessage('An error occurred while adding employee.');
+      setMessage('An error occurred while adding the employee.');
       console.error('Error:', error);
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-      {/* Form thêm nhân viên */}
+      {/* Form to add new employee */}
       <form onSubmit={handleSubmit}>
-        {/* Các trường nhập liệu */}
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-2">
             <label className="block text-gray-700 font-medium mb-2" htmlFor="ssn">
-              SSN (Social Security)*
+              SSN (Social Security Number)*
             </label>
             <input
               type="text"
@@ -174,13 +168,13 @@ const AddEmployeeForm: React.FC = () => {
           </div>
         </div>
 
-        {/* Nút điều khiển */}
+        {/* Control Buttons */}
         <div className="mt-6 flex justify-center space-x-4">
           <button
             type="submit"
             className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 flex items-center"
           >
-            Add
+            Add Employee
           </button>
           <button
             type="button"
@@ -200,7 +194,7 @@ const AddEmployeeForm: React.FC = () => {
         </div>
       </form>
 
-      {/* Thông báo */}
+      {/* Message Notification */}
       {message && <p className="text-center mt-4 text-green-500">{message}</p>}
     </div>
   );

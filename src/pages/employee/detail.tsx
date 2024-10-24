@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
 
 const EmployeeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -7,16 +8,11 @@ const EmployeeDetail: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
-        const response = await fetch(`https://6710d190a85f4164ef2f7802.mockapi.io/employee/${id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch employee data');
-        }
-        const data = await response.json();
-        setEmployee(data);
+        const response = await axios.get(`https://6710d190a85f4164ef2f7802.mockapi.io/employee/${id}`);
+        setEmployee(response.data);
         setLoading(false);
       } catch (error) {
         setError('Could not fetch employee details');
@@ -27,16 +23,13 @@ const EmployeeDetail: React.FC = () => {
     fetchEmployeeData();
   }, [id]);
 
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
-
   if (error) {
     return <div>{error}</div>;
   }
-
 
   if (!employee) {
     return <div>Employee not found</div>;
@@ -75,7 +68,6 @@ const EmployeeDetail: React.FC = () => {
           <p><strong>Note:</strong> {employee.note || 'No notes available'}</p>
         </div>
       </div>
-
 
       <div className="mt-6 flex justify-center space-x-4">
         <Link to={`/employee/edit/${employee.id}`} className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const Edit: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Lấy id từ URL
+  const { id } = useParams<{ id: string }>(); // Get the id from URL
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState<string>('');
@@ -13,7 +13,7 @@ const Edit: React.FC = () => {
   const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
-    // Gọi API để lấy dữ liệu tài khoản theo ID
+    // Call API to fetch account data by ID
     const fetchAccountData = async () => {
       try {
         const response = await axios.get(`https://6710d190a85f4164ef2f7802.mockapi.io/account/${id}`);
@@ -21,7 +21,7 @@ const Edit: React.FC = () => {
         setFullName(account.full_name);
         setPhoneNumber(account.phone_number);
         setEmail(account.email);
-        setNationality(account.nationality || 'USA'); // Giả sử nếu API không có nationality
+        setNationality(account.nationality || 'USA'); // Default to 'USA' if nationality is not available
         setActive(account.active);
       } catch (error) {
         console.error('Error fetching account data:', error);
@@ -41,10 +41,10 @@ const Edit: React.FC = () => {
         active: active,
       };
 
-      // Gửi yêu cầu PUT để cập nhật dữ liệu
+      // Send PUT request to update data
       await axios.put(`https://6710d190a85f4164ef2f7802.mockapi.io/account/${id}`, updatedAccount);
 
-      // Điều hướng về trang danh sách sau khi cập nhật thành công
+      // Navigate back to the user list after successful update
       navigate('/user');
     } catch (error) {
       console.error('Error updating account:', error);
@@ -56,7 +56,7 @@ const Edit: React.FC = () => {
       <h2 className="text-2xl font-bold mb-4">Edit Account</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block texst-sm font-medium text-gray-700">Full Name</label>
+          <label className="block text-sm font-medium text-gray-700">Full Name</label>
           <input
             type="text"
             value={fullName}

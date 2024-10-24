@@ -21,10 +21,10 @@ const Create: React.FC = () => {
         active: active,
       };
 
-      // Gửi yêu cầu POST tới API
+      // Send POST request to the API
       await axios.post('https://6710d190a85f4164ef2f7802.mockapi.io/account', newAccount);
 
-      // Điều hướng quay lại trang danh sách tài khoản sau khi thêm thành công
+      // Navigate back to the user list page after successful account creation
       navigate('/user');
     } catch (error) {
       console.error('Error adding account:', error);
