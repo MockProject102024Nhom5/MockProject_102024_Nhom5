@@ -1,0 +1,42 @@
+{
+  "development": {
+    "username": "sa",
+    "password": "123456",
+    "database": "mockproject",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialectOptions": {
+      "options": {
+        "encrypt": true,
+        "trustServerCertificate": true
+      }
+    },
+    "logging": false
+  },
+  "test": {
+    "username": "sa",
+    "password": "your_password",
+    "database": "database_test",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialectOptions": {
+      "options": {
+        "encrypt": true,
+        "trustServerCertificate": true
+      }
+    }
+  },
+  "production": {
+    "username": "sa",
+    "password": "your_password",
+    "database": "database_production",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialectOptions": {
+      "options": {
+        "encrypt": true,
+        "trustServerCertificate": true
+      }
+    }
+  }
+}
