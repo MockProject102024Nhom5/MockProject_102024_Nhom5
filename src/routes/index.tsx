@@ -9,10 +9,12 @@ import EditEmployee from '../pages/employee/edit.tsx';
 import EmployeeDetail from '../pages/employee/detail.tsx';
 
 const UserRoutes: UserElement[] = [
+    //Home
     {
         path: '/',
         element: <Home />,
     },
+    //Employee
     {
         path: '/employee',
         element: <Employee />,

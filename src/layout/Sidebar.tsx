@@ -1,27 +1,36 @@
 import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(true);
+	const navigate = useNavigate();
+	const storedUserData = sessionStorage.getItem('userData');
+	const userData = storedUserData ? JSON.parse(storedUserData) : null;
+
+
+	console.log(storedUserData)
+	const handleLogout = () => {
+		// Clears only userData
+		sessionStorage.removeItem('userData');
+		// Perform any additional logout logic here, if needed
+		navigate('/login');
+	};
 
 	return (
-		<div className="flex">
+		<div className="flex min-h-screen">
 			{/* Sidebar */}
 			<div
-				className={`${isOpen ? 'w-64' : 'w-16'
-					} bg-gray-900 h-screen p-5 pt-8 relative duration-300`}
+				className={`${isOpen ? 'w-64' : 'w-16'} fixed bg-gray-900 h-screen p-5 pt-8 duration-300`}
 			>
 				<img
 					src="https://img.icons8.com/material-outlined/24/ffffff/menu--v1.png"
-					className={`absolute cursor-pointer right-2.5 top-9 w-7 border-dark-purple
-            border-2   ${!isOpen && 'rotate-180'}`}
+					className={`absolute cursor-pointer right-2.5 top-9 w-7 border-dark-purple border-2 ${!isOpen && 'rotate-180'}`}
 					onClick={() => setIsOpen(!isOpen)}
 					alt="Toggle"
 				/>
 				<div className="flex items-center">
 					<h1
-						className={`text-white origin-left font-medium text-xl duration-300 ${!isOpen && 'scale-0'
-							}`}
+						className={`text-white origin-left font-medium text-xl duration-300 ${!isOpen && 'scale-0'}`}
 					>
 						<Link to='/'>MOCK PROJECT</Link>
 					</h1>
@@ -31,18 +40,15 @@ const Sidebar: React.FC = () => {
 				<ul className="pt-6">
 					<li className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md">
 						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}><Link to='/employee'>Employee</Link></span>
-						{/* <span className="ml-auto bg-gray-600 text-white text-xs px-2 py-1 rounded-full">5</span> */}
 					</li>
 					<li className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md">
-						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}><Link to='/user'>User</Link></span>
+						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}><Link to='/accounts'>User</Link></span>
 					</li>
 					<li className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md">
 						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}>Projects</span>
-						{/* <span className="ml-auto bg-gray-600 text-white text-xs px-2 py-1 rounded-full">12</span> */}
 					</li>
 					<li className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md">
 						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}>Calendar</span>
-						{/* <span className="ml-auto bg-gray-600 text-white text-xs px-2 py-1 rounded-full">20+</span> */}
 					</li>
 					<li className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md">
 						<span className={`${!isOpen && 'hidden'} origin-left duration-200`}>Documents</span>
@@ -79,12 +85,18 @@ const Sidebar: React.FC = () => {
 							className="w-8"
 							alt="Profile"
 						/>
-						<span className={`${!isOpen && 'hidden'} text-white`}>John Huynhk</span>
+						<span className={`${!isOpen && 'hidden'} text-white`}>{userData.full_name}</span>
+						<img
+							src="https://img.icons8.com/ios-glyphs/30/ffffff/logout-rounded.png"
+							alt="Logout"
+							className="w-6 cursor-pointer"
+							onClick={handleLogout}
+						/>
 					</div>
 				</div>
 			</div>
-
-			<div className="flex-1 p-7">
+			{/* Content Area */}
+			<div className="flex-1 ml-16 md:ml-64 p-7 overflow-y-auto">
 				<Outlet />
 			</div>
 		</div>
@@ -92,4 +104,3 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
-
