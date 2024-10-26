@@ -5,21 +5,21 @@ class ComplaintController {
         complaintService.createComplaint(req,res, req.body)
     }
 
-    getBillByUserEmail(req, res) {
-        const email = req.params.email
-        billModel.find({email: email})
-        .then(bills => res.json(bills))
-        .catch(err => res.status(500).json({msg: "Failed to fetch!"}))
-    }
+    // getBillByUserEmail(req, res) {
+    //     const email = req.params.email
+    //     billModel.find({email: email})
+    //     .then(bills => res.json(bills))
+    //     .catch(err => res.status(500).json({msg: "Failed to fetch!"}))
+    // }
 
-    getBillById(req, res) {
-        const id = req.params.id;
+    // getBillById(req, res) {
+    //     const id = req.params.id;
 
-        billModel
-            .findById(id)
-            .then((bill) => res.json({ bill: bill, ok: true }))
-            .catch((err) => res.status(401).json({ msg: "Error: " + err }));
-    }
+    //     billModel
+    //         .findById(id)
+    //         .then((bill) => res.json({ bill: bill, ok: true }))
+    //         .catch((err) => res.status(401).json({ msg: "Error: " + err }));
+    // }
 
     // create(req, res) {
     //     var billPayload = req.body;
