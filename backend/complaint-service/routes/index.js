@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+var express = require("express");
+var Router = express.Router();
+var complaintController = require("../controller/complaintController");
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+Router.post("/complaints/create", complaintController.createComplaint); // req và res tự truyền vào
+// billRouter.get("/:id", billCtrl.getBillById);
+// billRouter.get("/", billCtrl.index);
+// billRouter.post("/create", billCtrl.create);
+// billRouter.put("/update", billCtrl.update);
+// billRouter.delete("/delete/:id", billCtrl.delete);//
+module.exports = Router
