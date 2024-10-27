@@ -8,5 +8,6 @@ const connection = async () => {
     }
     return pool;
 }
+
 module.exports = connection
 // kết nối đến databasenpm install mssql

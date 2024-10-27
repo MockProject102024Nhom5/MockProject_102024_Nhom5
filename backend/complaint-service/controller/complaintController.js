@@ -2,8 +2,49 @@ const complaintService = require('../service/complaintService')
 
 class ComplaintController {
     createComplaint(req,res) {
-        complaintService.createComplaint(req,res, req.body)
+        console.log("controller create")
+        if (!req.body || typeof req.body !== 'object') {
+            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+        }
+        console.log("controller create2222")
+
+        const {residentId, requestTypeId, complaintDescription} = req.body
+        if(typeof residentId !== 'number' || typeof requestTypeId !== 'number' || typeof complaintDescription !== 'string'){
+          console.log("controller create3333")
+          return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+        }
+
+        complaintService.createComplaint(req,res)
     }
+
+
+    updateComplaint(req,res) {
+        console.log("controller update")
+        if (!req.body || typeof req.body !== 'object'){
+            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+          }
+
+          const requestId = +req.params.requestId; // Lấy requestId từ URL
+          const{requestTypeId,complaintDescription,submissionDate, employeeId,processingResult, deflag} = req.body;
+          
+          if(isNaN(requestId) || typeof requestTypeId !=='number' || typeof complaintDescription !== 'string'|| 
+            typeof submissionDate !== 'string' || typeof employeeId !== 'number' || typeof processingResult !=='string' || typeof deflag !== 'number'){
+            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+          }
+          console.log("controller update3")
+
+        complaintService.updateComplaint(req,res,requestId)
+    }
+    getComplaintById(req,res) {
+        console.log("get data tu db")
+        const requestId = +req.params.requestId // chuyển sang number
+        if(isNaN(requestId)){
+            return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+        }       
+         console.log("abc")
+        complaintService.getComplaintById(req,res,requestId)
+    }
+    
 
     // getBillByUserEmail(req, res) {
     //     const email = req.params.email

@@ -2,7 +2,13 @@ var express = require("express");
 var Router = express.Router();
 var complaintController = require("../controller/complaintController");
 
-Router.post("/complaints/create", complaintController.createComplaint); // req và res tự truyền vào
+Router.post("/complaints/create", complaintController.createComplaint);
+Router.put("/complaints/:requestId/update", complaintController.updateComplaint);
+Router.get("/complaints/:requestId", complaintController.getComplaintById);
+// Router.get("/complaints/", complaintController.getComplaintById);
+
+
+
 // billRouter.get("/:id", billCtrl.getBillById);
 // billRouter.get("/", billCtrl.index);
 // billRouter.post("/create", billCtrl.create);
