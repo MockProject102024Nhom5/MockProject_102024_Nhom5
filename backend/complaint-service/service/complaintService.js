@@ -44,17 +44,16 @@ class ComplaintService {
 
 
     async updateComplaint (req,res,requestId){
-      const{requestTypeId,complaintDescription,submissionDate, employeeId,processingResult, deflag} = req.body;
-      console.log(`value ${requestTypeId} ${complaintDescription}`)
+      const{requestTypeId,complaintDescription,receivedDate, employeeId,processingResult, deflag} = req.body;
+
 
       const pool = await connection();    
       try{
-        console.log(`date ${submissionDate}`)
       const result = await pool.request()
           .input('requestId',sql.Int,requestId)
           .input('requestTypeId', sql.Int, requestTypeId)        // Tham số đầu vào id
           .input('complaintDescription', sql.Text, complaintDescription) 
-          .input('submissionDate', sql.Date, submissionDate) // Tham số đầu vào name
+          .input('receivedDate', sql.Date, receivedDate) // Tham số đầu vào name
           .input('employeeId', sql.Int, employeeId)
           .input('processingResult', sql.Text, processingResult)
           .input('deflag',sql.Int,deflag)
@@ -68,34 +67,72 @@ class ComplaintService {
                 result.recordset[0]
          )
           }catch(error){
-            console.error('Lỗi khi updata tài liệu:', error);
             res.status(404).json({
               "error": "Not Found", 
               "message": "Rental record not found."            
             })
           }
     }
-    async getComplaintById(req,res,requestId){
-      let currentPool = await connection();
-      const request = currentPool.request();
-      const query = `select * from residentRequests where requestId = @requestId`;
-      request.input('requestId', sql.Int,requestId);
-      const result = await request.query(query);
-       //
-      console.log("get data thanh cong");
-      if(result.recordset[0] === undefined) return res.status(200).json({});
-      res.status(200).json(
-          result.recordset[0]
-     )
-      }catch(error){
-        console.error('Lỗi khi updata tài liệu:', error);
-        res.status(404).json({
-          "error": error, 
-          "message": "Rental record not found."            
-        })
-      }
 
+
+
+      async getComplaintById(req,res,requestId){
+        let currentPool = await connection();
+        const request = currentPool.request();
+        const query = `select * from residentRequests where requestId = @requestId`;
+        request.input('requestId', sql.Int,requestId);
+        const result = await request.query(query);
+         //
+        console.log("get data thanh cong");
+        if(result.recordset[0] === undefined) return res.status(200).json({});
+        res.status(200).json(
+            result.recordset[0]
+       )
+        }catch(error){
+          console.error('Lỗi khi updata tài liệu:', error);
+          res.status(404).json({
+            "error": error, 
+            "message": "Rental record not found."            
+          })
+        }
+
+        async getAllComplaint(req,res){
+          console.log("lay data");
+          let currentPool = await connection();
+          const request = currentPool.request();
+          const query = `select * from residentRequests`;
+          const result = await request.query(query);
+           //
+          if(result.recordset[0] === undefined) return res.status(200).json({});
+          res.status(200).json(
+            {
+              data :  result.recordset
+            }   
+         )
+          }catch(error){
+        }
+    
 
 }
+
+// const parts = receivedDate.split('-');
+// if(!parts[0] || !parts[1] || parts[2]){
+//   return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+// }
+// const year = parseInt(parts[0]);
+// const month = parseInt(parts[1]);
+// const day = parseInt(parts[2]);
+// if(isNaN(year) || isNaN(month) || isNaN(day)){
+//   return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+// }
+// if(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(receivedDate) == false){
+//   return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+// }
+// const inputDate = new Date(receivedDate);
+// const currentDate = new Date();
+// if(inputDate > currentDate){
+// return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+// }
+
 
 module.exports = new ComplaintService();

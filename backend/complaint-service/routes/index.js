@@ -2,10 +2,10 @@ var express = require("express");
 var Router = express.Router();
 var complaintController = require("../controller/complaintController");
 
-Router.post("/complaints/create", complaintController.createComplaint);
+Router.post("/complaints/create",complaintController.createComplaint);
 Router.put("/complaints/:requestId/update", complaintController.updateComplaint);
-Router.get("/complaints/:requestId", complaintController.getComplaintById);
-// Router.get("/complaints/", complaintController.getComplaintById);
+Router.get("/complaints/:requestId",complaintController.getComplaintById);
+Router.get("/complaints", complaintController.getAllComplaint);
 
 
 

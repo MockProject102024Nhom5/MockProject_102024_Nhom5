@@ -25,24 +25,26 @@ class ComplaintController {
           }
 
           const requestId = +req.params.requestId; // Lấy requestId từ URL
-          const{requestTypeId,complaintDescription,submissionDate, employeeId,processingResult, deflag} = req.body;
+          const{requestTypeId,complaintDescription,receivedDate, employeeId,processingResult, deflag} = req.body;
           
           if(isNaN(requestId) || typeof requestTypeId !=='number' || typeof complaintDescription !== 'string'|| 
-            typeof submissionDate !== 'string' || typeof employeeId !== 'number' || typeof processingResult !=='string' || typeof deflag !== 'number'){
+            typeof receivedDate !== 'string' || typeof employeeId !== 'number' || typeof processingResult !=='string' || typeof deflag !== 'number'){
             return res.status(400).send('request không hợp lệ hoặc không phải JSON');
           }
-          console.log("controller update3")
 
         complaintService.updateComplaint(req,res,requestId)
     }
     getComplaintById(req,res) {
-        console.log("get data tu db")
+        console.log("controller update3")
         const requestId = +req.params.requestId // chuyển sang number
         if(isNaN(requestId)){
             return res.status(400).send('request không hợp lệ hoặc không phải JSON')
         }       
-         console.log("abc")
         complaintService.getComplaintById(req,res,requestId)
+    } 
+
+    getAllComplaint(req,res) {
+        complaintService.getAllComplaint(req,res)
     }
     
 
