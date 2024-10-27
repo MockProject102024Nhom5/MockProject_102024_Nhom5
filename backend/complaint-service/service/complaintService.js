@@ -14,7 +14,6 @@ const formatDate = (date) => {
   
 class ComplaintService {
         async createComplaint(req, res,) {
-        console.log("controller create service")
         const {residentId, requestTypeId, complaintDescription} = req.body
 
         console.log(`value ${residentId} ${requestTypeId} ${complaintDescription}`)
@@ -35,7 +34,6 @@ class ComplaintService {
               result.recordset[0]
          )
        } catch (error) {
-         console.error('Lỗi khi thêm tài liệu:', error);
          res.status(404).json({
           "error": "Not Found", 
           "message": "Rental record not found."        
@@ -46,8 +44,6 @@ class ComplaintService {
 
     async updateComplaint (req,res,requestId){
       const{requestTypeId,complaintDescription,receivedDate, employeeId,processingResult, deflag} = req.body;
-
-
       const pool = await connection();    
       try{
       const result = await pool.request()
@@ -76,7 +72,6 @@ class ComplaintService {
     }
 
 
-
       async getComplaintById(req,res,requestId){
         let currentPool = await connection();
         const request = currentPool.request();
@@ -84,13 +79,11 @@ class ComplaintService {
         request.input('requestId', sql.Int,requestId);
         const result = await request.query(query);
          //
-        console.log("get data thanh cong");
         if(result.recordset[0] === undefined) return res.status(200).json({});
         res.status(200).json(
             result.recordset[0]
        )
         }catch(error){
-          console.error('Lỗi khi updata tài liệu:', error);
           res.status(404).json({
             "error": error, 
             "message": "Rental record not found."            
@@ -98,7 +91,6 @@ class ComplaintService {
         }
 
         async getAllComplaint(req,res){
-          console.log("lay data");
           let currentPool = await connection();
           const request = currentPool.request();
           const query = `select * from residentRequests`;
@@ -122,7 +114,6 @@ class ComplaintService {
                       SET deflag = 0 
                       OUTPUT INSERTED.* 
                       WHERE requestId = @requestId`);
-              console.log("update thanh cong");
               res.status(200).json(    
                     result.recordset[0]
              )

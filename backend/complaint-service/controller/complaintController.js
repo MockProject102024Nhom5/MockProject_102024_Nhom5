@@ -6,11 +6,8 @@ class ComplaintController {
         if (!req.body || typeof req.body !== 'object') {
             return res.status(400).send('request không hợp lệ hoặc không phải JSON');
         }
-        console.log("controller create2222")
-
         const {residentId, requestTypeId, complaintDescription} = req.body
         if(typeof residentId !== 'number' || typeof requestTypeId !== 'number' || typeof complaintDescription !== 'string'){
-          console.log("controller create3333")
           return res.status(400).send('request không hợp lệ hoặc không phải JSON');
         }
 
@@ -19,23 +16,21 @@ class ComplaintController {
 
 
     updateComplaint(req,res) {
-        console.log("controller update")
         if (!req.body || typeof req.body !== 'object'){
             return res.status(400).send('request không hợp lệ hoặc không phải JSON');
-          }
+        }
 
-          const requestId = +req.params.requestId; // Lấy requestId từ URL
-          const{requestTypeId,complaintDescription,receivedDate, employeeId,processingResult, deflag} = req.body;
+        const requestId = +req.params.requestId; // Lấy requestId từ URL
+        const{requestTypeId,complaintDescription,receivedDate, employeeId,processingResult, deflag} = req.body;
           
-          if(isNaN(requestId) || typeof requestTypeId !=='number' || typeof complaintDescription !== 'string'|| 
+        if(isNaN(requestId) || typeof requestTypeId !=='number' || typeof complaintDescription !== 'string'|| 
             typeof receivedDate !== 'string' || typeof employeeId !== 'number' || typeof processingResult !=='string' || typeof deflag !== 'number'){
             return res.status(400).send('request không hợp lệ hoặc không phải JSON');
-          }
+        }
 
         complaintService.updateComplaint(req,res,requestId)
     }
     getComplaintById(req,res) {
-        console.log("controller update3")
         const requestId = +req.params.requestId // chuyển sang number
         if(isNaN(requestId)){
             return res.status(400).send('request không hợp lệ hoặc không phải JSON')
@@ -48,7 +43,6 @@ class ComplaintController {
     }
 
     deleteComplaint(req,res) {
-        console.log("controller delete")
         const requestId = +req.params.requestId; // Lấy requestId từ URL
         if(isNaN(requestId)){
             return res.status(400).send('request không hợp lệ hoặc không phải JSON')
