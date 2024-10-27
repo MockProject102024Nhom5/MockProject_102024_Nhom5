@@ -83,8 +83,8 @@ class ComplaintService {
        )
         }catch(error){
           res.status(404).json({
-            "error": error, 
-            "message": "Rental record not found."            
+            "error": "Not Found", 
+            "message": "Rental record not found."                 
           })
         }
 
@@ -122,10 +122,6 @@ class ComplaintService {
                     result.recordset[0]
              )
               }catch(error){
-                res.status(404).json({
-                  "error": "Not Found", 
-                  "message": "Rental record not found."            
-                })
               }
         }
 }

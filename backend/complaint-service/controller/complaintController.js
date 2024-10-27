@@ -44,7 +44,7 @@ class ComplaintController {
     deleteComplaint(req,res) {
         const requestId = +req.params.requestId; // Lấy requestId từ URL
         const{deflag} = req.body ?? {};   // ? trả về bên phải nếu vế trái null || undefined
-        if(isNaN(requestId) || typeof deflag !== 'number' || deflag != 0){
+        if(isNaN(requestId) || typeof deflag !== 'number' || deflag !== 0){
             return res.status(400).json({
                 "error": "Invalid request",
                 "message": "check request."              
