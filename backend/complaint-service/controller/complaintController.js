@@ -2,38 +2,37 @@ const complaintService = require('../service/complaintService')
 
 class ComplaintController {
     createComplaint(req,res) {
-        console.log("controller create")
-        if (!req.body || typeof req.body !== 'object') {
-            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
-        }
-        const {residentId, requestTypeId, complaintDescription} = req.body
+        const {residentId, requestTypeId, complaintDescription} = req.body ?? {}
         if(typeof residentId !== 'number' || typeof requestTypeId !== 'number' || typeof complaintDescription !== 'string'){
-          return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+            return res.status(400).json({
+                "error": "Invalid request",
+                "message": "check request."              
+            });
         }
-
         complaintService.createComplaint(req,res)
     }
 
 
     updateComplaint(req,res) {
-        if (!req.body || typeof req.body !== 'object'){
-            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
-        }
-
         const requestId = +req.params.requestId; // Lấy requestId từ URL
-        const{requestTypeId,complaintDescription,receivedDate, employeeId,processingResult, deflag} = req.body;
+        const{requestTypeId,complaintDescription,receivedDate, employeeId,processingResult, deflag} = req.body??{};
           
         if(isNaN(requestId) || typeof requestTypeId !=='number' || typeof complaintDescription !== 'string'|| 
             typeof receivedDate !== 'string' || typeof employeeId !== 'number' || typeof processingResult !=='string' || typeof deflag !== 'number'){
-            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+            return res.status(400).json({
+                    "error": "Invalid request",
+                    "message": "check request."              
+            });
         }
-
         complaintService.updateComplaint(req,res,requestId)
     }
     getComplaintById(req,res) {
         const requestId = +req.params.requestId // chuyển sang number
         if(isNaN(requestId)){
-            return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+            return res.status(400).json({
+                "error": "Invalid request",
+                "message": "check request."              
+            });
         }       
         complaintService.getComplaintById(req,res,requestId)
     } 
@@ -44,67 +43,16 @@ class ComplaintController {
 
     deleteComplaint(req,res) {
         const requestId = +req.params.requestId; // Lấy requestId từ URL
-        if(isNaN(requestId)){
-            return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+        const{deflag} = req.body ?? {};   // ? trả về bên phải nếu vế trái null || undefined
+        if(isNaN(requestId) || typeof deflag !== 'number' || deflag != 0){
+            return res.status(400).json({
+                "error": "Invalid request",
+                "message": "check request."              
+            });
           } 
-
-        if (!req.body || typeof req.body !== 'object'){
-            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
-        }
-        const{deflag} = req.body;  
-        if(typeof deflag !== 'number' || (deflag > 1 && deflag < 0)){
-            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
-        }
-
         complaintService.deleteComplaint(res,requestId)
     }
     
-
-    // getBillByUserEmail(req, res) {
-    //     const email = req.params.email
-    //     billModel.find({email: email})
-    //     .then(bills => res.json(bills))
-    //     .catch(err => res.status(500).json({msg: "Failed to fetch!"}))
-    // }
-
-    // getBillById(req, res) {
-    //     const id = req.params.id;
-
-    //     billModel
-    //         .findById(id)
-    //         .then((bill) => res.json({ bill: bill, ok: true }))
-    //         .catch((err) => res.status(401).json({ msg: "Error: " + err }));
-    // }
-
-    // create(req, res) {
-    //     var billPayload = req.body;
-
-    //     billModel
-    //         .create(billPayload)
-    //         .then((bill) => {
-    //             res.json(bill);
-    //         })
-    //         .catch((err) => res.status(401).json({ msg: "Error: " + err }));
-    // }
-
-    // update(req, res) {
-    //     var billPayload = req.body;
-
-    //     billModel
-    //         .findByIdAndUpdate(billPayload._id, billPayload)
-    //         .then(() => {
-    //             res.json({ ok: true });
-    //         })
-    //         .catch((err) => res.status(401).json({ msg: "Error: " + err }));
-    // }
-
-    // delete(req, res) {
-    //     var id = req.params.id;
-    //     billModel
-    //         .findByIdAndDelete(id)
-    //         .then(() => res.json({ ok: true }))
-    //         .catch((err) => res.status(401).json({ msg: "Error: " + err }));
-    // }
 }
 
 module.exports = new ComplaintController();

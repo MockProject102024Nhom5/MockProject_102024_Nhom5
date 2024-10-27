@@ -1,7 +1,5 @@
 const connection = require('../config/connectDatabase');
 const sql = require('mssql');
-const { deleteComplaint } = require('../controller/complaintController');
-
 
 
 const formatDate = (date) => {
@@ -114,6 +112,12 @@ class ComplaintService {
                       SET deflag = 0 
                       OUTPUT INSERTED.* 
                       WHERE requestId = @requestId`);
+              if( result.recordset[0] === undefined)  {
+                res.status(404).json({
+                "error": "Not Found", 
+                "message": "Rental record not found."            
+                })
+              }
               res.status(200).json(    
                     result.recordset[0]
              )
