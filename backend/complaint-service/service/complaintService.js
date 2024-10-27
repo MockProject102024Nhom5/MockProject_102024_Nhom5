@@ -1,5 +1,6 @@
 const connection = require('../config/connectDatabase');
-const sql = require('mssql')
+const sql = require('mssql');
+const { deleteComplaint } = require('../controller/complaintController');
 
 
 
@@ -111,8 +112,27 @@ class ComplaintService {
          )
           }catch(error){
         }
-    
 
+        async deleteComplaint (res,requestId){
+          const pool = await connection();    
+          try{
+          const result = await pool.request()
+              .input('requestId',sql.Int,requestId)
+              .query(`UPDATE residentRequests 
+                      SET deflag = 0 
+                      OUTPUT INSERTED.* 
+                      WHERE requestId = @requestId`);
+              console.log("update thanh cong");
+              res.status(200).json(    
+                    result.recordset[0]
+             )
+              }catch(error){
+                res.status(404).json({
+                  "error": "Not Found", 
+                  "message": "Rental record not found."            
+                })
+              }
+        }
 }
 
 // const parts = receivedDate.split('-');

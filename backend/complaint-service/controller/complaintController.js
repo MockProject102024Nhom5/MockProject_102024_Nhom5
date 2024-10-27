@@ -46,6 +46,24 @@ class ComplaintController {
     getAllComplaint(req,res) {
         complaintService.getAllComplaint(req,res)
     }
+
+    deleteComplaint(req,res) {
+        console.log("controller delete")
+        const requestId = +req.params.requestId; // Lấy requestId từ URL
+        if(isNaN(requestId)){
+            return res.status(400).send('request không hợp lệ hoặc không phải JSON')
+          } 
+
+        if (!req.body || typeof req.body !== 'object'){
+            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+        }
+        const{deflag} = req.body;  
+        if(typeof deflag !== 'number' || (deflag > 1 && deflag < 0)){
+            return res.status(400).send('request không hợp lệ hoặc không phải JSON');
+        }
+
+        complaintService.deleteComplaint(res,requestId)
+    }
     
 
     // getBillByUserEmail(req, res) {
