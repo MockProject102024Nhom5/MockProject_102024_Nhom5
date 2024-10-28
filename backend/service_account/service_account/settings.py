@@ -64,7 +64,7 @@ ASGI_APPLICATION = 'service_account.asgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sql_server.pyodbc',
+        'ENGINE': 'mssql',
         'NAME': 'SQL Server',  
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
