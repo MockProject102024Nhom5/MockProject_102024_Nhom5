@@ -65,11 +65,9 @@ ASGI_APPLICATION = 'service_account.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sql_server.pyodbc',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'NAME': 'MockProject_102024_Nhom5',
+        'HOST': 'localhost',
+        'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
