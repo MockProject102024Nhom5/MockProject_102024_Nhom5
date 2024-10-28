@@ -1,9 +1,9 @@
 const config ={
-    user: 'sa',           // Tên đăng nhập SQL Server
-    password: '123',       // Mật khẩu
+    user: process.env.DB_USER,           
+    password: process.env.DB_PASSWORD,      
     server: process.env.DB_SERVER,  
-    post:  process.env.DB_POST,      // Tên máy chủ hoặc địa chỉ IP
-    database: 'mockproject',   // Tên cơ sở dữ liệu
+    post:  process.env.DB_POST,      
+    database: 'mockproject',  
     options: {
       encrypt: true,            // Đảm bảo kết nối an toàn (nếu cần)
       trustServerCertificate: true // Chỉ dùng khi làm việc với server không có chứng chỉ hợp lệ
