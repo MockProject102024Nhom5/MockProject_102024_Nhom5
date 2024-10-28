@@ -24,7 +24,6 @@ public class AmenityService {
 
     public Amenity createAmenity(Amenity amenity) {
         // Mặc định deflag = 1 nếu không được chỉ định
-        amenity.getAmenityId();
         if (amenity.getDeflag() == null) {
             amenity.setDeflag(1);
         }
@@ -37,24 +36,14 @@ public class AmenityService {
 
     public Amenity updateAmenity(Integer id, Amenity amenityDetails) {
         Amenity amenity = amenityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Amenity not found"));
-    
-        // Cập nhật chỉ các trường không null
-        if (amenityDetails.getAmenityName() != null) {
-            amenity.setAmenityName(amenityDetails.getAmenityName());
-        }
-        // Không cập nhật nếu description là null, giữ nguyên giá trị hiện tại
-        if (amenityDetails.getDescription() != null) {
-            amenity.setDescription(amenityDetails.getDescription());
-        }
-        // Tương tự cho deflag nếu bạn muốn giữ nguyên giá trị
-        if (amenityDetails.getDeflag() != null) {
-            amenity.setDeflag(amenityDetails.getDeflag());
-        }
-    
+                .orElseThrow(() -> new RuntimeException("Tiện ích không tìm thấy"));
+
+        amenity.setAmenityName(amenityDetails.getAmenityName());
+        amenity.setDescription(amenityDetails.getDescription());
+        amenity.setDeflag(amenityDetails.getDeflag());
+
         return amenityRepository.save(amenity);
     }
-    
     public void deleteAmenity(Integer id) {
         amenityRepository.deleteById(id);
     }
