@@ -1,10 +1,7 @@
 const { Sequelize } = require('sequelize');
 const path = require('path');
 
-const sequelize = new Sequelize('mockproject', 'sa', '123456', {
-    host: 'localhost',
-    dialect: 'mssql',
-});
+const sequelize = new Sequelize('mysql://localhost:3306/MockProject_102024_Nhom5', {});
 
 // Import các mô hình
 const Asset = require(path.join(__dirname, 'models', 'assets'))(sequelize, Sequelize.DataTypes);
