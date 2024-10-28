@@ -80,8 +80,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'MockProject_102024_Nhom5',
-        'USER': 'sa',
-        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '1433',
         'OPTIONS': {
