@@ -64,7 +64,7 @@ ASGI_APPLICATION = 'service_account.asgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sql_server.pyodbc',
+        'ENGINE': 'mssql',
         'NAME': 'MockProject_102024_Nhom5',
         'HOST': 'localhost',
         'PORT': '1433',
