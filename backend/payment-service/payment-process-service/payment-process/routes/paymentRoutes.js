@@ -10,7 +10,7 @@ router.get('/payments', getPayments)
 router.get('/payment/:id',getPayment)
 router.post('/payment', addPayment)
 router.put('payment/:id/update',updatePayment)
-router.delete('/payment/:id', deletePayment)
+router.delete('/payment/:id/delete', deletePayment)
 
 module.exports = {
     routes: router
