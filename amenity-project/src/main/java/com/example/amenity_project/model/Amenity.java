@@ -1,6 +1,8 @@
 package com.example.amenity_project.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
@@ -9,6 +11,7 @@ import jakarta.persistence.Table;
 @Table(name = "amenities")  // Tên bảng hiện tại trong cơ sở dữ liệu
 public class Amenity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "amenityId")  // Tên cột đã có sẵn trong bảng
     private Integer amenityId;
 
