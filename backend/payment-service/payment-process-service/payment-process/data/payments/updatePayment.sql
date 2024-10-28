@@ -1,5 +1,5 @@
 UPDATE [dbo].[payments]
-SET [residentId]=@residenId,
+SET [residentId]=@residentId,
     [paymentDate]=@paymentDate,
     [paymentTypeId]=@paymentTypeId,
     [amount]=@amount,

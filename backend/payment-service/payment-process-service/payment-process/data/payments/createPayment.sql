@@ -1,6 +1,6 @@
 INSERT INTO [dbo].[payments]
     (
-        [residenId],
+        [residentId],
         [paymentDate],
         [paymentTypeId],
         [amount],
@@ -9,7 +9,7 @@ INSERT INTO [dbo].[payments]
     )
 
 VALUES(
-    @residenId,
+    @residentId,
     @paymentDate,
     @paymentTypeId,
     @amount,

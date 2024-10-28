@@ -1,8 +1,7 @@
 SELECT  [paymentId],
-        [residenId],
+        [residentId],
         [paymentDate],
         [paymentTypeId],
-        [description],
         [amount],
         [paymentMethod],
         [deflag]

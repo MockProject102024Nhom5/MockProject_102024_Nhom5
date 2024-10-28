@@ -24,7 +24,7 @@ module.exports = {
             encrypt: sqlEncrypt,
             trustServerCertificate: true,
             enableArithAbort: true,
-            instanceName: 'MOCPROJECT',
+            instanceName: 'MOCKPROJECT',
         }
     }
 }

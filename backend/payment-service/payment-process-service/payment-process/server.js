@@ -39,7 +39,7 @@ app.post('/payment', async(req, res)=> {
       app_time: Date.now(), // miliseconds
       item: JSON.stringify(items),
       embed_data: JSON.stringify(embed_data),
-      amount: 50000,
+      amount: 500000,
       description: `Lazada - Payment for the order #${transId}`,
       bank_code: "",
       callbackurl: " https://2cc7-14-248-115-218.ngrok-free.app/callback"
