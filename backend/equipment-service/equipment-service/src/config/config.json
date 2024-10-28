@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "sa",
-    "password": "1234",
-    "database": "MockProject_102024_Nhom5",
+    "password": "123456",
+    "database": "mockproject",
     "host": "localhost",
     "dialect": "mssql",
     "dialectOptions": {
@@ -15,8 +15,8 @@
   },
   "test": {
     "username": "sa",
-    "password": "1234",
-    "database": "MockProject_102024_Nhom5",
+    "password": "your_password",
+    "database": "database_test",
     "host": "localhost",
     "dialect": "mssql",
     "dialectOptions": {
@@ -28,8 +28,8 @@
   },
   "production": {
     "username": "sa",
-    "password": "1234",
-    "database": "MockProject_102024_Nhom5",
+    "password": "your_password",
+    "database": "database_production",
     "host": "localhost",
     "dialect": "mssql",
     "dialectOptions": {
