@@ -40,7 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'project_name.urls'
+ROOT_URLCONF = 'service_account.urls'
 
 TEMPLATES = [
     {
@@ -58,17 +58,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'project_name.wsgi.application'
-ASGI_APPLICATION = 'project_name.asgi.application'
+WSGI_APPLICATION = 'service_account.wsgi.application'
+ASGI_APPLICATION = 'service_account.asgi.application'
 
 # Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sql_server.pyodbc',
-        'NAME': 'your_database_name',
-        'USER': 'your_database_user',
-        'PASSWORD': 'your_database_password',
-        'HOST': 'localhost',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
