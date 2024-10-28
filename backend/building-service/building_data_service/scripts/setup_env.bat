@@ -10,10 +10,10 @@ REM Kích hoạt môi trường ảo
 call env\Scripts\activate.bat
 
 REM Cài đặt các gói từ requirements.txt
-pip install -r requirements.txt
+pip install -r requirement.txt
 
-REM Chuyển đến thư mục payment_service
-cd MockProject_102024_Nhom5
+REM Chuyển đến thư mục building_service
+cd building_data
 
 REM Chạy server
 python manage.py runserver

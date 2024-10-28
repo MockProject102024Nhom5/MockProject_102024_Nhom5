@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'building_service'
+    'django.contrib.humanize',
+    'django.contrib.redirects',
+    'building_service',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'MockProject_102024_Nhom5.urls'
+ROOT_URLCONF = 'run.urls'
 
 TEMPLATES = [
     {
@@ -81,7 +84,7 @@ DATABASES = {
         'ENGINE': 'mssql',
         'NAME': 'MockProject_102024_Nhom5',
         'USER': 'sa',
-        'PASSWORD': '123',
+        'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '1433',
         'OPTIONS': {
