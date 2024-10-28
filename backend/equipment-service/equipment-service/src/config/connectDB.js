@@ -10,10 +10,17 @@ const { Sequelize } = require('sequelize');
 //         }
 //     }
 // });
-const sequelize = new Sequelize('mockproject', 'sa', '123456', {
-    host: 'localhost',
+const sequelize = new Sequelize('MockProject_102024_Nhom5', 'sa', '1234', {
     dialect: 'mssql',
-    dialectModule: require('tedious'),
+    dialectOptions: {
+        options: {
+            encrypt: true, 
+            trustServerCertificate: true,
+        },
+    },
+    host: 'localhost',
+    port: 1433,
+    logging: false,
 });
 
 
