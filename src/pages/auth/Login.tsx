@@ -26,7 +26,8 @@ const Login: React.FC = () => {
       });
 
       if (response.status === 201) {
-        sessionStorage.setItem('userData', JSON.stringify(response.data));
+        const { password, ...userDataWithoutPassword } = response.data;
+        sessionStorage.setItem('userData', JSON.stringify(userDataWithoutPassword));
         alert('Login successful!');
         navigate('/');
       } else {
