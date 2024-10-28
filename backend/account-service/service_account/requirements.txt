@@ -3,7 +3,7 @@ Django==5.0.9
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.2.0  
 djangorestframework-simplejwt[cryptography]==5.2.0  
-django-cors-headers==3.16.0  
+django-cors-headers
 mssql-django==1.5
 pyodbc==5.2.0
 pytz==2024.2
