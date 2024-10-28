@@ -9,7 +9,7 @@ const{addPayment, getPayment, getPayments, updatePayment, deletePayment} = payme
 router.get('/payments', getPayments)
 router.get('/payment/:id',getPayment)
 router.post('/payment', addPayment)
-router.put('payment/:id',updatePayment)
+router.put('payment/:id/update',updatePayment)
 router.delete('/payment/:id', deletePayment)
 
 module.exports = {
