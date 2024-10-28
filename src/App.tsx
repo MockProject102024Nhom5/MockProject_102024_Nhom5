@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from npm install --save-dev @types/react @types/react-dom'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
